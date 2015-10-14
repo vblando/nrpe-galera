@@ -26,7 +26,7 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 DB_USER="user"
 ready=`echo "show status like 'wsrep_ready';" | mysql -u $DB_USER | egrep -v 'Value' | awk '{print $2}'`
-connected=`echo "show status like 'wsrep_connected';" | mysql -u sticbkp | egrep -v 'Value' | awk '{print $2}'`
+connected=`echo "show status like 'wsrep_connected';" | mysql -u $DB_USER | egrep -v 'Value' | awk '{print $2}'`
 
 if [ "$ready" != "ON" ]
 then
