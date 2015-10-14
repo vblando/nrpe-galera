@@ -1,0 +1,42 @@
+#!/bin/bash
+#============================== SUMMARY =====================================
+#
+#Program : check_galera_uuid
+#Version : 0.1
+#Date    : Oct 14, 2015
+#Author  : Mario Hernandez - @mariofix
+#Licence : GPL - summary below, full text at http://www.fsf.org/licenses/gpl.txt
+#Requirements: mariadb, galera
+#
+#
+# =========================== PROGRAM LICENSE =================================
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+DB_USER="user"
+ready=`echo "show status like 'wsrep_ready';" | mysql -u $DB_USER | egrep -v 'Value' | awk '{print $2}'`
+connected=`echo "show status like 'wsrep_connected';" | mysql -u $DB_USER | egrep -v 'Value' | awk '{print $2}'`
+
+if [ "$ready" != "ON" ]
+then
+    echo "CRITICAL - Galera not Ready"
+    exit 2
+elif [ "$connected" != "ON" ]
+then
+    echo "CRITICAL - Galera Not Connected"
+    exit 2
+else
+    echo "OK - Galera Ready and Connected"
+    exit 0
+fi
