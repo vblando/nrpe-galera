@@ -29,15 +29,15 @@ state=`echo "show status like 'wsrep_local_state';" | mysql -u $DB_USER | egrep 
 
 if [ $state -eq 1 ]
 then
-    echo "WARNING - Estado Joining"
+    echo "WARNING - Joining state"
     exit 1
 elif [ $state -eq 2 ]
 then
-    echo "CRITICAL - Estado Donor/Desynced"
+    echo "CRITICAL - Donor/Desynced state"
     exit 2
 elif [ $state -eq 3 ]
 then
-    echo "WARNING - Estado Joined"
+    echo "WARNING - Joined state"
     exit 1
 elif [ $state -eq 4 ]
 then

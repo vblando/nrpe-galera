@@ -27,23 +27,23 @@
 DB_USER="user"
 uuid=`echo "show status like 'wsrep%uuid';" | mysql -u $DB_USER | egrep -v 'gcomm|Value' | awk '{print $2}'`
 previous=""
-iguales=0
+same=0
 for uid in $uuid;
 do
     if [ "$previous" == "$uid" ]
     then
-         iguales=1
+         same=1
     else
          previous=$uid
     fi
 done
 
-if [ $iguales -eq 1 ]
+if [ $same -eq 1 ]
 then
-    echo "OK - Tienen el mismo ID"
+    echo "OK - They have the same ID"
     exit 0
 else
-    echo "Critical - Tienen ID Distinto"
+    echo "Critical - They have different ID"
     exit 2
 fi
 
